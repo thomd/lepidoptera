@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'optparse'
+require 'rubigen'
+
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: " + File.basename($0) + " GENERATOR [args] [option]"
+  opts.separator ""
+  
+  opts.on("-t", "--static", "generate code for a static page hosted on heroku.") do
+    options[:all] = true
+  end
+  
+  opts.on("-s", "--sinatra", "generate code for a sinatra application hosted on heroku.") do
+    options[:all] = true
+  end
+  
+end
+opts.parse!
+
+
+
+if %w(-v --version).include? ARGV.first
+  require File.dirname(__FILE__) + "/../lib/butterfly"
+  puts "#{File.basename($0)} #{Butterfly::VERSION}"
+  exit(0)
+end
+
+require 'rubigen/scripts/generate'
+
+require "pp"
+RubiGen::Base.use_application_sources! :rubygems
+RubiGen::Base.prepend_sources(*[ 
+  RubiGen::PathSource.new(:app, File.join(File.dirname(__FILE__), "..", "jquery_generators")),
+  RubiGen::PathSource.new(:app, File.join(File.dirname(__FILE__), "..", "heroku_generators"))
+]) 
+pp RubiGen::Base.sources
+
+
+if ARGV.delete "--static"
+#  RubiGen::Scripts::Generate.new.run(ARGV, :generator => 'static')
+else
+#  RubiGen::Scripts::Generate.new.run(ARGV, :generator => 'sinatra', :backtrace => true)
+end
