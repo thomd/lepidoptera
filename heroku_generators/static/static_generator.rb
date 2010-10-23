@@ -60,6 +60,10 @@ EOS
       # @author = options[:author]
     end
 
+    def after_generate
+      puts "after_generate"
+    end
+
     # Installation skeleton.  Intermediate directories are automatically
     # created so don't sweat their absence here.
     BASEDIRS = %w(

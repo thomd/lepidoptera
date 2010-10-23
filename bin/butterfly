@@ -3,39 +3,103 @@
 require 'rubygems'
 require 'optparse'
 require 'rubigen'
+require 'rubigen/scripts/generate'
+require File.dirname(__FILE__) + "/../lib/butterfly"
 
+### Set up generators
+
+# Store all generator-names within the root directory in an array.
+generators = []
+
+# Generators have to be located within a directory with a name matching the pattern: `<name>_generators`.
+Dir['*_generators'].each do |generator|
+  generators.push(generator.gsub(/_generators$/,'')) if File.directory?(generator)
+end
+
+# Add an app-generator to the beginning of a list of sources where we look, in order, for generators.
+RubiGen::Base.prepend_sources(generators.map{|generator| RubiGen::PathSource.new(:app, File.join(File.dirname(__FILE__), "..", generator + "_generators")) }) 
+
+# 
+RubiGen::Base.sources.each do |source|
+  label = source.label
+  names = source.names(:visible)
+  path = source.path unless source.is_a?(RubiGen::GemPathSource)
+#  puts "#{label}: #{names} (#{path})\n"
+end
+
+### Parse options and arguments from command-line
+
+# set default options:
+#
+# 1. quiet = false
+# 2. git = false
+options = {:quiet => false, :git => false}
+
+puts "1: #{ARGV}"
+puts options
+
+# parse options:
+# after parsing they are removed from ARGV
 opts = OptionParser.new do |opts|
-  opts.banner = "Usage: " + File.basename($0) + " GENERATOR [args] [option]"
+  opts.banner = "Usage: " + File.basename($0) + " [options] GENERATOR TYPE <project-name>"
   opts.separator ""
-  
-  opts.on("-t", "--static", "generate code for a static page hosted on heroku.") do
-    options[:all] = true
+
+  opts.on("-q", "--quiet", "Suppress status output.") do
+    options[:quiet] = true
   end
   
-  opts.on("-s", "--sinatra", "generate code for a sinatra application hosted on heroku.") do
-    options[:all] = true
+  opts.on("-g", "--git", "Create an empty git repository.") do
+    options[:git] = true
   end
-  
+
+  opts.on("-h", "--help", "Print generator's options and usage.") do
+    puts opts
+    exit
+  end
+
+  opts.on("-v", "--version", "Print version.") do
+    puts "#{File.basename($0)} #{Butterfly::VERSION}"
+    exit
+  end
+
+  opts.separator ""
+  opts.separator "Please choose a generator below:"
+  opts.separator ""
+  generators.each do |generator|
+    opts.separator "    #{generator}"
+  end
 end
 opts.parse!
 
+puts "2: #{ARGV}"
+puts options
 
-
-if %w(-v --version).include? ARGV.first
-  require File.dirname(__FILE__) + "/../lib/butterfly"
-  puts "#{File.basename($0)} #{Butterfly::VERSION}"
-  exit(0)
+# parse arguments:
+# first argument is GENERATOR
+# second argument is TYPE
+if ARGV.length == 1
+  generator = ARGV[0]
+  if generators.include?(generator)
+    # show TYPEs
+    
+  else
+    raise Butterfly::GeneratorError, "Generator '#{generator}' does not exist." 
+  end
 end
 
-require 'rubigen/scripts/generate'
 
-require "pp"
-RubiGen::Base.use_application_sources! :rubygems
-RubiGen::Base.prepend_sources(*[ 
-  RubiGen::PathSource.new(:app, File.join(File.dirname(__FILE__), "..", "jquery_generators")),
-  RubiGen::PathSource.new(:app, File.join(File.dirname(__FILE__), "..", "heroku_generators"))
-]) 
-pp RubiGen::Base.sources
+
+
+# show help if GENERATOR and TYPE is missing
+if ARGV.length != 2
+  opts.parse(["-h"]) 
+  exit 
+end
+
+generator = ARGV[0]
+type = ARGV[1]
+
+# check if first argument equals one of the generator-names
 
 
 if ARGV.delete "--static"
