@@ -8,16 +8,11 @@ require File.dirname(__FILE__) + "/../lib/butterfly"
 
 ### Set up generators
 
-# Store all generator-names within the root directory in an array.
-generators = []
-
-# Generators have to be located within a directory with a name matching the pattern: `<name>_generators`.
-Dir['*_generators'].each do |generator|
-  generators.push(generator.gsub(/_generators$/,'')) if File.directory?(generator)
-end
+# get code generators
+generators = Butterfly::CodeGenerators.new
 
 # Add an app-generator to the beginning of a list of sources where we look, in order, for generators.
-RubiGen::Base.prepend_sources(generators.map{|generator| RubiGen::PathSource.new(:app, File.join(File.dirname(__FILE__), "..", generator + "_generators")) }) 
+RubiGen::Base.prepend_sources(generators.sources) 
 
 # 
 RubiGen::Base.sources.each do |source|
@@ -29,11 +24,9 @@ end
 
 ### Parse options and arguments from command-line
 
-# set default options:
-#
-# 1. quiet = false
-# 2. git = false
-options = {:quiet => false, :git => false}
+# get default options:
+options = Butterfly::DEFAULTS
+
 
 puts "1: #{ARGV}"
 puts options
@@ -65,8 +58,8 @@ opts = OptionParser.new do |opts|
   opts.separator ""
   opts.separator "Please choose a generator below:"
   opts.separator ""
-  generators.each do |generator|
-    opts.separator "    #{generator}"
+  generators.names.each do |name|
+    opts.separator "    #{name}"
   end
 end
 opts.parse!
