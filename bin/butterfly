@@ -6,6 +6,7 @@ require 'rubigen'
 require 'rubigen/scripts/generate'
 require File.dirname(__FILE__) + "/../lib/butterfly"
 
+# defines some colors for commando line
 PURPLE = "\033[0;35m"
 BLUE   = "\033[0;34m"
 WHITE  = "\033[0;37m"
@@ -24,37 +25,41 @@ RubiGen::Base.prepend_sources(generators.sources)
 # get default options:
 options = Butterfly::DEFAULTS
 
-# parse options (after parsing they are removed from ARGV)
-opts = OptionParser.new do |opts|
-  opts.banner = "Usage: #{File.basename($0)} [options] #{PURPLE}<generator-group>#{WHITE} <generaor-type> <project-name>"
-  opts.separator ""
+# default options
+class OptionParser
+  def on_default
+    self.separator ""
 
-  opts.on("-q", "--quiet", "Suppress status output.") do
-    options[:quiet] = true
-  end
-  
-  opts.on("-g", "--git", "Create an empty git repository.") do
-    options[:git] = true
-  end
+    self.on("-n", "--new", "Create a new Code Generator.") do
+      options[:new] = true
+    end
 
-  opts.on("-h", "--help", "Print generator's options and usage.") do
-    puts opts
-    exit
-  end
+    self.on("-q", "--quiet", "Suppress status output.") do
+      options[:quiet] = true
+    end
 
-  opts.on("-v", "--version", "Print version.") do
-    puts "#{File.basename($0)} #{Butterfly::VERSION}"
-    exit
-  end
+    self.on("-g", "--git", "Create an empty git repository.") do
+      options[:git] = true
+    end
 
-  opts.separator ""
-  opts.separator "Please choose a generator-group below:"
-  opts.separator ""
-  generators.names.each do |name|
-    opts.separator "    #{PURPLE}#{name}#{WHITE}"
+    self.separator ""
+    self.define_head "Version #{Butterfly::VERSION}"
+    self.define_head "A life-enhancing code generator for everyday use."
+    self.define_head ""
   end
 end
-opts.parse!
+
+# parse options (after parsing they are removed from ARGV)
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename($0)} [options] #{BLUE}<generator-group>#{WHITE} <generator-type> <project-name>"
+  opts.on_default
+  opts.separator "#{BLUE}Please choose a generator-group:#{WHITE}"
+  opts.separator ""
+  generators.names.each do |name|
+    opts.separator "    #{BLUE}#{name}#{WHITE}"
+  end
+end
+parser.parse!
 
 # parse arguments:
 # first argument is <generator-group>
@@ -66,16 +71,16 @@ if ARGV.length == 1
   if generators.names.include?(generator_group)
 
     # show generator-types
-    opts = OptionParser.new do |opts|
+    parser = OptionParser.new do |opts|
       opts.banner = "Usage: #{File.basename($0)} [options] #{PURPLE}#{generator_group}#{WHITE} #{BLUE}<generator-type>#{WHITE} <project-name>"
-      opts.separator ""
-      opts.separator "Please choose a generator-type below:"
+      opts.on_default
+      opts.separator "#{BLUE}Please choose a #{generator_group} generator-type:#{WHITE}"
       opts.separator ""
       generator_types.each do |type|
         opts.separator "    #{BLUE}#{type}#{WHITE}"
       end
     end
-    opts.parse!
+    parser.parse!
   else
     raise Butterfly::GeneratorError, "generator group '#{generator_group}' does not exist." 
   end
@@ -89,7 +94,14 @@ if ARGV.length == 2
 
   # check if second argument is an existing generator-type
   if generator_types.include?(generator_type)
-    project_name = File.basename(Dir.pwd)
+#    project_name = File.basename(Dir.pwd)
+    parser = OptionParser.new do |opts|
+      opts.banner = "Usage: #{File.basename($0)} [options] #{PURPLE}#{generator_group}#{WHITE} #{PURPLE}#{generator_type}#{WHITE} #{BLUE}<project-name>#{WHITE}"
+      opts.on_default
+      opts.separator "#{BLUE}Please enter a project-name!#{WHITE}"
+    end
+    parser.parse!
+
   else
     raise Butterfly::GeneratorError, "generator type '#{generator_type}' does not exist." 
   end  
@@ -97,14 +109,18 @@ end
 
 # show help if generator-group, generator-type and project-name is missing
 if ARGV.length != 3
-  opts.parse(["-h"])
+  parser.parse(["-h"])
   exit
 end
 
+generator_group = ARGV[0]
+generator_type = ARGV[1]
 project_name = ARGV[2]
 
+puts generator_group
+puts generator_type
+puts project_name
 
 
-
-#  RubiGen::Scripts::Generate.new.run(ARGV, :generator => 'static')
-#  RubiGen::Scripts::Generate.new.run(ARGV, :generator => 'sinatra', :backtrace => true)
+RubiGen::Scripts::Generate.new.run(["baaz"], :generator => 'static')
+#RubiGen::Scripts::Generate.new.run(project_name, :generator => generator_type, :backtrace => true)

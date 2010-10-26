@@ -32,6 +32,7 @@ with the following __options__:
 
     -q, --quiet              Suppress status output.
     -g, --git                Create an empty git repository after code generation.
+    -n, --new                Add a new 
     -h, --help               Print generator's options and usage.
     -v, --version            Print version.
  
@@ -83,6 +84,10 @@ generate code for a sinatra application on heroku:
 # Extend Code Generators
 
 butterfly is based on _Nic Williams_ Ruby generator framework [rubigen][r].
+
+### add new generator
+
+
 
 # License
 

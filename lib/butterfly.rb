@@ -12,7 +12,8 @@ module Butterfly
   # Default options. Overriden by command-line options.
   DEFAULTS = {
     :quiet => false,
-    :git => false
+    :git => false,
+    :new => false
   }
 
   # basepath of generators
