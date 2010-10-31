@@ -61,7 +61,7 @@ EOS
     end
 
     def after_generate
-      puts "after_generate"
+      puts "TODO: after_generate"
     end
 
     # Installation skeleton.  Intermediate directories are automatically

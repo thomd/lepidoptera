@@ -9,16 +9,8 @@ module Butterfly
   # Current version
   VERSION = '0.1.0'
 
-  # Default options. Overriden by command-line options.
-  DEFAULTS = {
-    :quiet => false,
-    :git => false,
-    :new => false
-  }
-
-  # basepath of generators
+  # path of build-in code generators
   BASEPATH = File.join(File.dirname(__FILE__), '..', '*_generators')
-
 
   # Error handling
   class GeneratorError < StandardError

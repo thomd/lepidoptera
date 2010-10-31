@@ -5,8 +5,9 @@ require 'optparse'
 require 'rubigen'
 require 'rubigen/scripts/generate'
 require File.dirname(__FILE__) + "/../lib/butterfly"
+require File.dirname(__FILE__) + "/../lib/options"
 
-# defines some colors for commando line
+# defines some colors for a nice command-line output
 PURPLE = "\033[0;35m"
 BLUE   = "\033[0;34m"
 WHITE  = "\033[0;37m"
@@ -18,111 +19,74 @@ RED    = "\033[0;31m"
 # get code generators
 generators = Butterfly::CodeGenerators.new
 
-# Add all code generators to the beginning of a list of sources where we look in order.
-RubiGen::Base.prepend_sources(generators.sources) 
 
 ### Parse options and arguments from command-line
 
-# get default options:
-options = Butterfly::DEFAULTS
+# get options parser
+parser = Butterfly::Options::Parser.new(generators)
 
-# default options
-class OptionParser
-  def on_default(opts)
-    self.separator ""
+# parse and get options
+options = parser.parse(ARGV)
 
-    self.on("-n", "--new", "Create a new Code Generator in .butterfly") do
-      opts[:new] = true
-    end
 
-    self.on("-q", "--quiet", "Suppress status output") do
-      opts[:quiet] = true
-    end
-
-    self.on("-g", "--git", "Create an empty git repository") do
-      opts[:git] = true
-    end
-
-    self.separator ""
-    self.define_head "Version #{Butterfly::VERSION}"
-    self.define_head "A life-enhancing code generator for everyday use."
-    self.define_head ""
-  end
+# After parsing the options,
+#  * first argument should be <generator-group>
+#  * second argument should be <generator-type>
+#  * third argument should be a <project_name>
+#
+# If no argument is left, show a list of available generator-groups
+if ARGV.empty?
+  parser.show_groups
 end
 
-# parse options (after parsing they are removed from ARGV)
-parser = OptionParser.new do |opts|
-  opts.banner = "Usage: #{PURPLE}#{File.basename($0)}#{WHITE} [options] #{BLUE}<generator-group>#{WHITE} <generator-type> <project-name>"
-  opts.on_default(options)
-  opts.separator "#{BLUE}Please choose a generator-group:#{WHITE}"
-  opts.separator ""
-  generators.names.each do |name|
-    opts.separator "    #{BLUE}#{name}#{WHITE}"
-  end
-end
-parser.parse!
 
-
-
-# parse arguments:
-# first argument is <generator-group>
+# If one argument is provided, regard it as the name of a generator-group.
+# If the generator-group name is an existing generator-group, show a list of available generator-types 
 if ARGV.length == 1
-  generator_group = ARGV[0]
-  generator_types = generators.types_of(generator_group)
   
-  # check if first argument is an existing generator-group
+  generator_group = ARGV[0]
+  
   if generators.names.include?(generator_group)
-
-    # show generator-types
-    parser = OptionParser.new do |opts|
-      opts.banner = "Usage: #{PURPLE}#{File.basename($0)}#{WHITE} [options] #{PURPLE}#{generator_group}#{WHITE} #{BLUE}<generator-type>#{WHITE} <project-name>"
-      opts.on_default(options)
-      opts.separator "#{BLUE}Please choose a #{generator_group} generator-type:#{WHITE}"
-      opts.separator ""
-      generator_types.each do |type|
-        opts.separator "    #{BLUE}#{type}#{WHITE}"
-      end
-    end
-    parser.parse!
+    parser.show_types(generator_group)
   else
     raise Butterfly::GeneratorError, "#{RED}generator group '#{generator_group}' does not exist.#{WHITE}" 
   end
+  
 end
 
-# second argument is <generator-type>
+
+# If two arguments are provided, regard the first as the name of a generator-group and the second as the name of a generator-type.
+# If the generator-type name is an existing generator-type, ask for a project name 
 if ARGV.length == 2
   generator_group = ARGV[0]
   generator_types = generators.types_of(generator_group)
   generator_type = ARGV[1]
 
-  # check if second argument is an existing generator-type
   if generator_types.include?(generator_type)
-#    project_name = File.basename(Dir.pwd)
-    parser = OptionParser.new do |opts|
-      opts.banner = "Usage: #{PURPLE}#{File.basename($0)}#{WHITE} [options] #{PURPLE}#{generator_group}#{WHITE} #{PURPLE}#{generator_type}#{WHITE} #{BLUE}<project-name>#{WHITE}"
-      opts.on_default(options)
-      opts.separator "#{BLUE}Please enter a project-name!#{WHITE}"
-    end
-    parser.parse!
-
+    parser.ask_for_project(generator_group, generator_type)
   else
     raise Butterfly::GeneratorError, "#{RED}generator type '#{generator_type}' does not exist in generator group '#{generator_group}'.#{WHITE}" 
   end  
+
 end
 
-# show help if generator-group, generator-type and project-name is missing
-if ARGV.length != 3
-  parser.parse(["-h"])
-  exit
-end
 
+# If three arguments are provided, the first is the generator-group, the second the generator-type ans the thirs the project name.
 generator_group = ARGV[0]
 generator_type = ARGV[1]
 project_name = ARGV[2]
 
-puts generator_group
-puts generator_type
-puts project_name
+
+puts "generator group: #{generator_group}"
+puts "generator type:  #{generator_type}"
+puts "project name:    #{project_name}"
+puts "options:         #{options}"
+
+
+
+# Add all code generators to the beginning of a list of sources where we look in order.
+RubiGen::Base.prepend_sources(generators.sources) 
+
 
 
 #RubiGen::Scripts::Generate.new.run(["baaz"], :generator => 'static')
