@@ -84,10 +84,17 @@ puts "options:         #{options}"
 
 
 
-# Add all code generators to the beginning of a list of sources where we look in order.
-RubiGen::Base.prepend_sources(generators.sources) 
+# Add only the code generator of the selected generator-group to the beginning of a list of sources.
+# This is to make generator-types with the same name clear
+RubiGen::Base.prepend_sources(generators.source_of(generator_group)) 
 
 
+puts "Sources: #{RubiGen::Base.sources}"
+RubiGen::Base.sources.each do |s|
+  puts s.names(:visible)
+end
 
-#RubiGen::Scripts::Generate.new.run(["baaz"], :generator => 'static')
-#RubiGen::Scripts::Generate.new.run(project_name, :generator => generator_type, :backtrace => true)
+
+# generate code!
+RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :backtrace => true)
+

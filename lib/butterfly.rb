@@ -16,6 +16,9 @@ module Butterfly
   class GeneratorError < StandardError
   end
 
+  class GeneratorSourceMissingError < StandardError
+  end
+
 
 
   # Generator
@@ -38,6 +41,16 @@ module Butterfly
     # returns array of generator-group sources
     def sources
       generators.map{ |generator| generator.source }      
+    end
+    
+    # returns generator source for a given generator-group
+    def source_of(name)
+      selected = generators.select { |n| n.name == name }
+      if selected.length == 0
+        raise Butterfly::GeneratorSourceMissingError
+      else
+        selected[0].source
+      end
     end
     
     # returns array of generator-types for a given generator-group
