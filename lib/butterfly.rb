@@ -82,14 +82,15 @@ end
 
 
 
-# overwrite filtered_sources to change folder of user code generators
+# overwrite filtered_sources to change folder of user code generators:
+#  1. define .butterfly folder instead of .rbigem folder to avoid conflicts 
+#  2. do not include code generators from gems
 module RubiGen
   module Lookup
     module ClassMethods
       def filtered_sources(filters)
         new_sources = []
         new_sources << PathFilteredSource.new(:user, "#{Dir.user_home}/.butterfly/", *filters)
-        new_sources
       end
     end
   end

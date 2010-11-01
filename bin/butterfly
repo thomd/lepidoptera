@@ -74,9 +74,21 @@ end
 # If three arguments are provided, the first is the generator-group, the second the generator-type ans the thirs the project name.
 generator_group = ARGV[0]
 generator_type = ARGV[1]
+
+# check if generator group exists
+if !generators.names.include?(generator_group)
+  raise Butterfly::GeneratorError, "#{RED}generator group '#{generator_group}' does not exist.#{WHITE}" 
+end
+
+# check if generator type exists
+if !generators.types_of(generator_group).include?(generator_type)
+  raise Butterfly::GeneratorError, "#{RED}generator type '#{generator_type}' does not exist in generator group '#{generator_group}'.#{WHITE}" 
+end  
+
 project_name = ARGV[2]
 
 
+# DEBUG 
 puts "generator group: #{generator_group}"
 puts "generator type:  #{generator_type}"
 puts "project name:    #{project_name}"
