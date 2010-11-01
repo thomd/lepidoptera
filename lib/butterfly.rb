@@ -10,7 +10,7 @@ module Butterfly
   VERSION = '0.1.0'
 
   # path of build-in code generators
-  BASEPATH = File.join(File.dirname(__FILE__), '..', '*_generators')
+  GENERATORS_PATH = File.join(File.dirname(__FILE__), '..', '*_generators')
 
   # Error handling
   class GeneratorError < StandardError
@@ -28,7 +28,7 @@ module Butterfly
     
     def initialize
       @generators = []
-      Dir[BASEPATH].each do |file|
+      Dir[GENERATORS_PATH].each do |file|
         @generators.push(GeneratorGroup.new(file)) if File.directory?(file)
       end
     end
@@ -77,6 +77,21 @@ module Butterfly
       end
     end
     
+  end
+end
+
+
+
+# overwrite filtered_sources to change folder of user code generators
+module RubiGen
+  module Lookup
+    module ClassMethods
+      def filtered_sources(filters)
+        new_sources = []
+        new_sources << PathFilteredSource.new(:user, "#{Dir.user_home}/.butterfly/", *filters)
+        new_sources
+      end
+    end
   end
 end
 

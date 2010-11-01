@@ -11,9 +11,9 @@ class OptionParser
   def add_default(opts)
     self.separator ""
 
-#    self.on("-n", "--new", "Create a new Code Generator in .butterfly") do
-#      opts[:new] = true
-#    end
+    self.on("-n", "--new", "Create a new Code Generator in ~/.butterfly") do
+      opts[:new] = true
+    end
 
     self.on("-q", "--quiet", "Suppress status output") do
       opts[:quiet] = true
