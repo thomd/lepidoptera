@@ -108,5 +108,5 @@ end
 
 
 # generate code!
-#RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :backtrace => true)
+RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :backtrace => true)
 
