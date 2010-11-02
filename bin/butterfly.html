@@ -27,7 +27,9 @@
         <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;rubygems&#39;</span>
 <span class="nb">require</span> <span class="s1">&#39;optparse&#39;</span>
 <span class="nb">require</span> <span class="s1">&#39;rubigen&#39;</span>
-<span class="nb">require</span> <span class="s1">&#39;rubigen/scripts/generate&#39;</span></pre></div>
+<span class="nb">require</span> <span class="s1">&#39;rubigen/scripts/generate&#39;</span>
+<span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/../lib/butterfly&quot;</span>
+<span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/../lib/options&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-2'>
@@ -35,10 +37,13 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-2">#</a>
         </div>
-        <h2>Set up generators</h2>
+        <p> defines some colors for a nice command-line output</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre><span class="no">PURPLE</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;35m&quot;</span>
+<span class="no">BLUE</span>   <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;34m&quot;</span>
+<span class="no">WHITE</span>  <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;37m&quot;</span>
+<span class="no">RED</span>    <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[0;31m&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-3'>
@@ -46,10 +51,10 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-3">#</a>
         </div>
-        <p> Store all generators within the root directory in an array.</p>
+        <h2>Set up generators</h2>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">generators</span> <span class="o">=</span> <span class="o">[]</span></pre></div>
+        <div class='highlight'><pre></pre></div>
       </td>
     </tr>
     <tr id='section-4'>
@@ -57,12 +62,10 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-4">#</a>
         </div>
-        <p> Generators have to be located within a directory with a name matching the pattern: <code>&lt;name&gt;_generators</code>.</p>
+        <p> get code generators</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="no">Dir</span><span class="o">[</span><span class="s1">&#39;*_generators&#39;</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">generator</span><span class="o">|</span>
-  <span class="n">generators</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">generator</span><span class="p">)</span> <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">directory?</span><span class="p">(</span><span class="n">generator</span><span class="p">)</span>
-<span class="k">end</span></pre></div>
+        <div class='highlight'><pre><span class="n">generators</span> <span class="o">=</span> <span class="no">Butterfly</span><span class="o">::</span><span class="no">CodeGenerators</span><span class="o">.</span><span class="n">new</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -70,10 +73,10 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-5">#</a>
         </div>
-        <p> Add an app-generator to the beginning of a list of sources where we look, in order, for generators.</p>
+        <h2>Parse options and arguments from command-line</h2>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="no">RubiGen</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">prepend_sources</span><span class="p">(</span><span class="n">generators</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="o">|</span><span class="n">g</span><span class="o">|</span> <span class="no">RubiGen</span><span class="o">::</span><span class="no">PathSource</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:app</span><span class="p">,</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="n">g</span><span class="p">))</span> <span class="p">})</span> </pre></div>
+        <div class='highlight'><pre></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -81,15 +84,10 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-6">#</a>
         </div>
-        
+        <p> get options parser</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="no">RubiGen</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">source</span><span class="o">|</span>
-  <span class="n">label</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">label</span>
-  <span class="n">names</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">names</span><span class="p">(</span><span class="ss">:visible</span><span class="p">)</span>
-  <span class="n">path</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">path</span> <span class="k">unless</span> <span class="n">source</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="no">RubiGen</span><span class="o">::</span><span class="no">GemPathSource</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">label</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">names</span><span class="si">}</span><span class="s2"> (</span><span class="si">#{</span><span class="n">path</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">&quot;</span>
-<span class="k">end</span></pre></div>
+        <div class='highlight'><pre><span class="n">parser</span> <span class="o">=</span> <span class="no">Butterfly</span><span class="o">::</span><span class="no">Options</span><span class="o">::</span><span class="no">Parser</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">generators</span><span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -97,10 +95,10 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-7">#</a>
         </div>
-        <h2>Parse arguments and options from command-line</h2>
+        <p> parse and get options</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre><span class="n">options</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="no">ARGV</span><span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -108,15 +106,17 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-8">#</a>
         </div>
-        <p> set default options:</p>
+        <p> After parsing the options,
+  * first argument should be &lt;generator-group>
+  * second argument should be &lt;generator-type>
+  * third argument should be a &lt;project_name></p>
 
-<ol>
-<li>quiet = false</li>
-<li>gitify = false</li>
-</ol>
+<p> If no argument is left, show a list of available generator-groups</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">options</span> <span class="o">=</span> <span class="o">[</span><span class="ss">:quiet</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="o">]</span></pre></div>
+        <div class='highlight'><pre><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">empty?</span>
+  <span class="n">parser</span><span class="o">.</span><span class="n">show_groups</span>
+<span class="k">end</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -124,44 +124,21 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-9">#</a>
         </div>
-        <p> parse options</p>
+        <p> If one argument is provided, regard it as the name of a generator-group.
+ If the generator-group name is an existing generator-group, show a list of available generator-types</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">opts</span> <span class="o">=</span> <span class="no">OptionParser</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">opts</span><span class="o">|</span>
-  <span class="n">opts</span><span class="o">.</span><span class="n">banner</span> <span class="o">=</span> <span class="s2">&quot;Usage: &quot;</span> <span class="o">+</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vg">$0</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; GENERATOR TYPE [option]&quot;</span>
-  <span class="n">opts</span><span class="o">.</span><span class="n">separator</span> <span class="s2">&quot;&quot;</span>
-  <span class="n">opts</span><span class="o">.</span><span class="n">separator</span> <span class="s2">&quot;Please choose a generator below.&quot;</span>
-  <span class="n">opts</span><span class="o">.</span><span class="n">separator</span> <span class="s2">&quot;&quot;</span>
+        <div class='highlight'><pre><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">1</span>
   
-  <span class="n">opts</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;--quiet&quot;</span><span class="p">,</span> <span class="s2">&quot;Suppress status output.&quot;</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">options</span><span class="o">[</span><span class="ss">:quiet</span><span class="o">]</span> <span class="o">=</span> <span class="kp">true</span>
+  <span class="n">generator_group</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+  
+  <span class="k">if</span> <span class="n">generators</span><span class="o">.</span><span class="n">names</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">generator_group</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">show_types</span><span class="p">(</span><span class="n">generator_group</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="k">raise</span> <span class="no">Butterfly</span><span class="o">::</span><span class="no">GeneratorError</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">RED</span><span class="si">}</span><span class="s2">generator group &#39;</span><span class="si">#{</span><span class="n">generator_group</span><span class="si">}</span><span class="s2">&#39; does not exist.</span><span class="si">#{</span><span class="no">WHITE</span><span class="si">}</span><span class="s2">&quot;</span> 
   <span class="k">end</span>
   
-  <span class="n">opts</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s2">&quot;-g&quot;</span><span class="p">,</span> <span class="s2">&quot;--git&quot;</span><span class="p">,</span> <span class="s2">&quot;Create an empty git repository.&quot;</span><span class="p">)</span> <span class="k">do</span>
-    <span class="n">options</span><span class="o">[</span><span class="ss">:git</span><span class="o">]</span> <span class="o">=</span> <span class="kp">true</span>
-  <span class="k">end</span>
-
-  <span class="n">opts</span><span class="o">.</span><span class="n">separator</span> <span class="s2">&quot;&quot;</span>
-  <span class="n">opts</span><span class="o">.</span><span class="n">separator</span> <span class="s2">&quot;Common options:&quot;</span>
-
-  <span class="n">opts</span><span class="o">.</span><span class="n">on_tail</span><span class="p">(</span><span class="s2">&quot;-h&quot;</span><span class="p">,</span> <span class="s2">&quot;--help&quot;</span><span class="p">,</span> <span class="s2">&quot; Print generator&#39;s options and usage&quot;</span><span class="p">)</span> <span class="k">do</span>
-    <span class="nb">puts</span> <span class="n">opts</span>
-    <span class="nb">exit</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-<span class="n">opts</span><span class="o">.</span><span class="n">parse!</span>
-
-
-
-<span class="k">if</span> <span class="sx">%w(-v --version)</span><span class="o">.</span><span class="n">include?</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">first</span>
-  <span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">__FILE__</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/../lib/butterfly&quot;</span>
-  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vg">$0</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="no">Butterfly</span><span class="o">::</span><span class="no">VERSION</span><span class="si">}</span><span class="s2">&quot;</span>
-  <span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="k">end</span>
-
-
-
-<span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">delete</span> <span class="s2">&quot;--static&quot;</span></pre></div>
+<span class="k">end</span></pre></div>
       </td>
     </tr>
     <tr id='section-10'>
@@ -169,10 +146,23 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-10">#</a>
         </div>
-        <p>  RubiGen::Scripts::Generate.new.run(ARGV, :generator => &lsquo;static&rsquo;)</p>
+        <p> If two arguments are provided, regard the first as the name of a generator-group and the second as the name of a generator-type.
+ If the generator-type name is an existing generator-type, ask for a project name</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">else</span></pre></div>
+        <div class='highlight'><pre><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">2</span>
+
+  <span class="n">generator_group</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+  <span class="n">generator_types</span> <span class="o">=</span> <span class="n">generators</span><span class="o">.</span><span class="n">types_of</span><span class="p">(</span><span class="n">generator_group</span><span class="p">)</span>
+  <span class="n">generator_type</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
+
+  <span class="k">if</span> <span class="n">generator_types</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">generator_type</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">ask_for_project</span><span class="p">(</span><span class="n">generator_group</span><span class="p">,</span> <span class="n">generator_type</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="k">raise</span> <span class="no">Butterfly</span><span class="o">::</span><span class="no">GeneratorError</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">RED</span><span class="si">}</span><span class="s2">generator type &#39;</span><span class="si">#{</span><span class="n">generator_type</span><span class="si">}</span><span class="s2">&#39; does not exist in generator group &#39;</span><span class="si">#{</span><span class="n">generator_group</span><span class="si">}</span><span class="s2">&#39;.</span><span class="si">#{</span><span class="no">WHITE</span><span class="si">}</span><span class="s2">&quot;</span> 
+  <span class="k">end</span>  
+
+<span class="k">end</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -180,11 +170,117 @@
         <div class="octowrap">
           <a class="octothorpe" href="#section-11">#</a>
         </div>
-        <p>  RubiGen::Scripts::Generate.new.run(ARGV, :generator => &lsquo;sinatra&rsquo;, :backtrace => true)</p>
+        <p> If three arguments are provided, the first is the generator-group, the second the generator-type ans the thirs the project name.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">generator_group</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+<span class="n">generator_type</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-12">#</a>
+        </div>
+        <p> check if generator group exists</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">if</span> <span class="o">!</span><span class="n">generators</span><span class="o">.</span><span class="n">names</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">generator_group</span><span class="p">)</span>
+  <span class="k">raise</span> <span class="no">Butterfly</span><span class="o">::</span><span class="no">GeneratorError</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">RED</span><span class="si">}</span><span class="s2">generator group &#39;</span><span class="si">#{</span><span class="n">generator_group</span><span class="si">}</span><span class="s2">&#39; does not exist.</span><span class="si">#{</span><span class="no">WHITE</span><span class="si">}</span><span class="s2">&quot;</span> 
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-13">#</a>
+        </div>
+        <p> check if generator type exists</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">if</span> <span class="o">!</span><span class="n">generators</span><span class="o">.</span><span class="n">types_of</span><span class="p">(</span><span class="n">generator_group</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">generator_type</span><span class="p">)</span>
+  <span class="k">raise</span> <span class="no">Butterfly</span><span class="o">::</span><span class="no">GeneratorError</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="no">RED</span><span class="si">}</span><span class="s2">generator type &#39;</span><span class="si">#{</span><span class="n">generator_type</span><span class="si">}</span><span class="s2">&#39; does not exist in generator group &#39;</span><span class="si">#{</span><span class="n">generator_group</span><span class="si">}</span><span class="s2">&#39;.</span><span class="si">#{</span><span class="no">WHITE</span><span class="si">}</span><span class="s2">&quot;</span> 
+<span class="k">end</span>  
+
+<span class="n">project_name</span> <span class="o">=</span> <span class="no">ARGV</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-14">#</a>
+        </div>
+        <p> DEBUG
+ * puts &ldquo;generator group: #{generator_group}&rdquo;
+ * puts &ldquo;generator type:  #{generator_type}&rdquo;
+ * puts &ldquo;project name:    #{project_name}&rdquo;
+ * puts &ldquo;options:         #{options}&rdquo;</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-15">#</a>
+        </div>
+        <h2>generate code!</h2>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-16">#</a>
+        </div>
+        <p> Add only the code generator of the selected generator-group to the beginning of a list of sources.
+ This is to make generator-types with the same name clear</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">RubiGen</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">prepend_sources</span><span class="p">(</span><span class="n">generators</span><span class="o">.</span><span class="n">source_of</span><span class="p">(</span><span class="n">generator_group</span><span class="p">))</span> </pre></div>
+      </td>
+    </tr>
+    <tr id='section-17'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-17">#</a>
+        </div>
+        <p> generate a new project &lt;project_name> of type &lt;generator_type></p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">RubiGen</span><span class="o">::</span><span class="no">Scripts</span><span class="o">::</span><span class="no">Generate</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">[</span><span class="n">project_name</span><span class="o">]</span><span class="p">,</span> <span class="ss">:generator</span> <span class="o">=&gt;</span> <span class="n">generator_type</span><span class="p">,</span> <span class="ss">:backtrace</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-18">#</a>
+        </div>
+        <h2>post processing of options</h2>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-19'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-19">#</a>
+        </div>
+        <p> create an empty git repository and commit generated files</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">end</span></pre></div>
+        <div class='highlight'><pre><span class="k">if</span> <span class="n">options</span><span class="o">[</span><span class="ss">:git</span><span class="o">]</span> <span class="k">then</span>
+  <span class="nb">require</span> <span class="s1">&#39;git&#39;</span>
+  <span class="n">project_folder</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="no">Dir</span><span class="o">.</span><span class="n">pwd</span><span class="p">,</span> <span class="n">project_name</span><span class="p">)</span>
+  <span class="n">g</span> <span class="o">=</span> <span class="no">Git</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">project_folder</span><span class="p">)</span>
+  <span class="n">g</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">project_folder</span><span class="p">)</span>
+  <span class="n">g</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="s2">&quot;beginning of </span><span class="si">#{</span><span class="n">project_name</span><span class="si">}</span><span class="s2"> project&quot;</span><span class="p">)</span>
+<span class="k">end</span></pre></div>
       </td>
     </tr>
     </table>
