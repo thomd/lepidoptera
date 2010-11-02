@@ -11,7 +11,7 @@ class OptionParser
   def add_default(opts)
     self.separator ""
 
-#    self.on("-n", "--new", "Create a new Code Generator in ~/.butterfly") do
+#    self.on("-n", "--new", "Add a new code generator in ~/.butterfly") do
 #      opts[:new] = true
 #    end
 
@@ -23,7 +23,7 @@ class OptionParser
       opts[:git] = true
     end
 
-#    self.on("-s", "--svn [URL]","Create an empty git repository") do |url|
+#    self.on("-s", "--svn [URL]","Initial import into the given svn repository") do |url|
 #      opts[:svn] = url
 #    end
 

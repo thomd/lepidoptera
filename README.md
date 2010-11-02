@@ -10,7 +10,8 @@ What is butterfly?
 ------------------
 
 butterfly is a very simple and easy extensible __code generator for common every day projects__.  
-All code generators integrated into this project are structured in __generator groups__, which are based on a technology (for example jquery or heroku hosted projects), whereas every group can have multiple __generator types__ of projects.
+
+All code generators integrated into this project are structured in __generator groups__, whereas every group can have multiple __generator types__ of projects.
 
 For the time being, butterfly has code generators for projects like:
 
@@ -32,7 +33,7 @@ Usage
 
 for grouped code generators:
 
-    butterfly [options] <generator-group>:<generator-type> <project-name>
+    butterfly [options] <generator-group> <generator-type> <project-name>
 
 or for ungrouped code generators:
 
@@ -41,16 +42,15 @@ or for ungrouped code generators:
 with the following __options__:
 
     -q, --quiet              Suppress status output.
-    -g, --git                Create an empty git repository after code generation.
+    -g, --git                Create a git repository after code generation.
     -n, --new                Add a new code generator in ~/.butterfly
     -h, --help               Print generator's options and usage.
-    -v, --version            Print version.
  
-and - for the time being - the following __code generators__:
+and - for the time being - the following __code generators__ which are included in this gem:
 
-    heroku:static
-    heroku:sinatra
-    jquery:plugin
+    heroku static
+    heroku sinatra
+    jquery plugin
   
 Helpers
 -------
@@ -65,7 +65,7 @@ Get a list of all code generator-types for a given generator-group:
 
 If no project name is given, the current folder name is used as project name:
 
-    $ butterfly <generator-group>:<generator-type>
+    $ butterfly <generator-group> <generator-type>
 
 Extending Code Generators
 -------------------------
@@ -83,9 +83,10 @@ You may include new code generators by putting the following code structure into
           ├─ ...
           └─ a folder
 
-Much more easy is to use a generator generator which generates the above structure:
+Much more easy is to use a generator generator which generates the above code generator stub into `~/.butterfly`:
 
-    $ butterfly code:generator <name-of-code-generator>
+    $ butterfly -n <type-of-code-generator>
+    $ butterfly -n <code-generator-group> <type-of-code-generator>
 
 Integrated Code Generators
 ==========================
@@ -99,7 +100,7 @@ get List of all jquery generators:
 
 generate code for a jquery plugin:
 
-    $ butterfly jquery:plugin <plugin-name>
+    $ butterfly jquery plugin <plugin-name>
 
 Heroku Generators
 -----------------
@@ -110,11 +111,11 @@ get List of all heroku generators:
 
 generate code for a static page on heroku:
 
-    $ butterfly heroku:static <page-name>
+    $ butterfly heroku static <page-name>
     
 generate code for a sinatra application on heroku:
 
-    $ butterfly heroku:sinatra <app-name>
+    $ butterfly heroku sinatra <app-name>
     
 License
 =======
@@ -144,7 +145,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 [wiki-1]: http://en.wiktionary.org/wiki/butterfly "Butterfly on Wiktionary"
 [wiki-2]: http://en.wiktionary.org/wiki/lep "Lep on Wiktionary"
 [j]: http://jquery.com/ "jQuery: The Write Less, Do More, JavaScript Library"
-[h]: http://heroku.com/ "eroku | Ruby Cloud Platform as a Service"
+[h]: http://heroku.com/ "heroku | Ruby Cloud Platform as a Service"
 [s]: http://www.sinatrarb.com/ "Sinatra"
 [r]: http://rubigen.rubyforge.org/ "rubigen - Ruby Generator Framework"
 
