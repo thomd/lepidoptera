@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     activesupport (2.3.10)
+    git (1.2.5)
     rubigen (1.5.5)
       activesupport (~> 2.3.5)
 
@@ -9,4 +10,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  git (= 1.2.5)
   rubigen (= 1.5.5)

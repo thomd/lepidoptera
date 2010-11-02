@@ -101,12 +101,22 @@ puts "options:         #{options}"
 RubiGen::Base.prepend_sources(generators.source_of(generator_group)) 
 
 
-puts "Sources: #{RubiGen::Base.sources}"
-RubiGen::Base.sources.each do |s|
-  puts s.names(:visible)
-end
+# DUBUGGING
+#puts "Sources: #{RubiGen::Base.sources}"
+#RubiGen::Base.sources.each do |s|
+#  puts s.names(:visible)
+#end
 
 
 # generate code!
 RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :backtrace => true)
+
+
+# create an empty git repository
+if options[:git] then
+  require 'git'
+  Git.init(File.join(Dir.pwd, project_name))
+end
+
+
 

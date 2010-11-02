@@ -36,7 +36,6 @@ module Butterfly
 
       # loop through build in code generators and user code generators
       [GENERATORS_PATH, USER_PATH].each do |path|
-        puts path
         Dir[path].each do |file|
           @generators.push(GeneratorGroup.new(file)) if File.directory?(file)
         end
