@@ -104,7 +104,8 @@ RubiGen::Base.prepend_sources(generators.source_of(generator_group))
 
 
 # generate a new project <project_name> of type <generator_type>
-RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :backtrace => true)
+RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :quiet => options[:quiet])
+
 
 ### post processing
 
