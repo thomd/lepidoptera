@@ -112,10 +112,13 @@ RubiGen::Base.prepend_sources(generators.source_of(generator_group))
 RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :backtrace => true)
 
 
-# create an empty git repository
+# create an empty git repository and commit generated files
 if options[:git] then
   require 'git'
-  Git.init(File.join(Dir.pwd, project_name))
+  project_folder = File.join(Dir.pwd, project_name)
+  g = Git.init(project_folder)
+  g.add(project_folder)
+  g.commit("beginning of #{project_name} project")
 end
 
 
