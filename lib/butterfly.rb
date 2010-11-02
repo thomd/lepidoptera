@@ -88,3 +88,23 @@ module Butterfly
     
   end
 end
+
+
+
+# adding colored output
+module RubiGen
+  class SimpleLogger
+    def log(status, message, &block)
+
+      # define some status colors
+      status_color = {
+        :exists => RED, 
+        :identical => BLUE, 
+        :create => GREEN
+      }
+
+      @out.print("#{status_color[status.to_sym]}%12s#{WHITE}  %s%s\n" % [status, '  ' * @level, message]) unless quiet
+      indent(&block) if block_given?
+    end
+  end
+end

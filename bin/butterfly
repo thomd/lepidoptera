@@ -11,6 +11,8 @@ require File.dirname(__FILE__) + "/../lib/options"
 PURPLE = "\033[0;35m"
 BLUE   = "\033[0;34m"
 WHITE  = "\033[0;37m"
+GREEN  = "\033[0;32m"
+YELLOW = "\033[0;33m"
 RED    = "\033[0;31m"
 
 
@@ -73,8 +75,8 @@ end
 
 
 # If three arguments are provided, the first is the generator-group, the second the generator-type ans the thirs the project name.
-generator_group = ARGV[0]
-generator_type = ARGV[1]
+generator_group = ARGV.shift
+generator_type = ARGV.shift
 
 # check if generator group exists
 if !generators.names.include?(generator_group)
@@ -86,14 +88,14 @@ if !generators.types_of(generator_group).include?(generator_type)
   raise Butterfly::GeneratorError, "#{RED}generator type '#{generator_type}' does not exist in generator group '#{generator_group}'.#{WHITE}" 
 end  
 
-project_name = ARGV[2]
+project_name = ARGV[0]
 
 
 # DEBUG 
-# * puts "generator group: #{generator_group}"
-# * puts "generator type:  #{generator_type}"
-# * puts "project name:    #{project_name}"
-# * puts "options:         #{options}"
+#puts "generator group: #{generator_group}"
+#puts "generator type:  #{generator_type}"
+#puts "project name:    #{project_name}"
+#puts "options:         #{options}"
 
 
 ### generate code!
@@ -104,7 +106,7 @@ RubiGen::Base.prepend_sources(generators.source_of(generator_group))
 
 
 # generate a new project <project_name> of type <generator_type>
-RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :quiet => options[:quiet])
+RubiGen::Scripts::Generate.new.run(ARGV, :generator => generator_type, :quiet => options[:quiet])
 
 
 ### post processing
@@ -112,16 +114,16 @@ RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type,
 # create an empty git repository and commit generated files
 if options[:git] then
   require 'git'
+  logger = RubiGen::SimpleLogger.new(STDOUT)
   project_folder = File.join(Dir.pwd, project_name)
   begin
     g = Git.open(project_folder)
+    logger.exists '.git'
   rescue ArgumentError
     g = Git.init(project_folder)
     g.add(project_folder)
     g.commit("beginning of #{project_name} project")
-    puts "      create  #{BLUE}git-repository#{WHITE}"
+    logger.create '.git'
   end
 end
-
-
 
