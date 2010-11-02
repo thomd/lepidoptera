@@ -19,7 +19,7 @@ class OptionParser
       opts[:quiet] = true
     end
 
-    self.on("-g", "--git","Create an empty git repository") do
+    self.on("-g", "--git","Create a git repository") do
       opts[:git] = true
     end
 

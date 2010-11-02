@@ -58,6 +58,7 @@ end
 # If two arguments are provided, regard the first as the name of a generator-group and the second as the name of a generator-type.
 # If the generator-type name is an existing generator-type, ask for a project name 
 if ARGV.length == 2
+
   generator_group = ARGV[0]
   generator_types = generators.types_of(generator_group)
   generator_type = ARGV[1]
@@ -89,36 +90,36 @@ project_name = ARGV[2]
 
 
 # DEBUG 
-puts "generator group: #{generator_group}"
-puts "generator type:  #{generator_type}"
-puts "project name:    #{project_name}"
-puts "options:         #{options}"
+# * puts "generator group: #{generator_group}"
+# * puts "generator type:  #{generator_type}"
+# * puts "project name:    #{project_name}"
+# * puts "options:         #{options}"
 
 
+### generate code!
 
 # Add only the code generator of the selected generator-group to the beginning of a list of sources.
 # This is to make generator-types with the same name clear
 RubiGen::Base.prepend_sources(generators.source_of(generator_group)) 
 
 
-# DUBUGGING
-#puts "Sources: #{RubiGen::Base.sources}"
-#RubiGen::Base.sources.each do |s|
-#  puts s.names(:visible)
-#end
-
-
-# generate code!
+# generate a new project <project_name> of type <generator_type>
 RubiGen::Scripts::Generate.new.run([project_name], :generator => generator_type, :backtrace => true)
 
+### post processing
 
 # create an empty git repository and commit generated files
 if options[:git] then
   require 'git'
   project_folder = File.join(Dir.pwd, project_name)
-  g = Git.init(project_folder)
-  g.add(project_folder)
-  g.commit("beginning of #{project_name} project")
+  begin
+    g = Git.open(project_folder)
+  rescue ArgumentError
+    g = Git.init(project_folder)
+    g.add(project_folder)
+    g.commit("beginning of #{project_name} project")
+    puts "      create  #{BLUE}git-repository#{WHITE}"
+  end
 end
 
 
