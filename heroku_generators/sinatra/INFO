@@ -1,5 +1,5 @@
 ------------
-deploy static project on heroku with:
+deploy sinatra project on heroku with:
 
 <% if !gitinit then %>
     git init

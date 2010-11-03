@@ -88,9 +88,10 @@ module Butterfly
 end
 
 
-
-# adding colored output
+# tweaking some things in Rubigen which does not fit to Butterfly
 module RubiGen
+  
+  # adding colored output for logger
   class SimpleLogger
     def log(status, message, &block)
 
@@ -105,6 +106,14 @@ module RubiGen
 
       @out.print("#{status_color[status.to_sym]}%12s#{WHITE}  %s%s\n" % [status, '  ' * @level, message]) unless quiet
       indent(&block) if block_given?
+    end
+  end
+  
+  # show not only generators with an USAGE file
+  # (don't understand the usecase for this in rubigen)
+  class Spec
+    def visible?
+      true
     end
   end
 end

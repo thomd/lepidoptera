@@ -23,7 +23,7 @@ Installation
 ------------
 
     $ sudo gem install butterfly
-    
+
 As [lep][wiki-2] (/ˈlɛp/) is a synonym for [butterfly][wiki-1], you may also set a shortcut alias in your `.bashrc` file:
 
     $ alias lep='butterfly $1'
