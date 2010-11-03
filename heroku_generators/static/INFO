@@ -1,0 +1,10 @@
+------------
+deploy project on heroku with:
+
+<% if !gitinit then %>
+    git init
+    ...
+<% end %>
+    heroku create <%= name %>
+    git push heroku master
+    heroku open

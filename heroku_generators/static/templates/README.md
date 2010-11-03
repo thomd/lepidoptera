@@ -13,7 +13,7 @@ Deployment
 <%- end -%>
     $ ...
     $ heroku create <%= name %>
-    § git push heroku master
+    $ git push heroku master
     $ heroku open
 
 Meta

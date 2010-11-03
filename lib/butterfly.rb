@@ -16,14 +16,12 @@ module Butterfly
   USER_PATH = File.join(Dir.user_home, '.butterfly', '*_generators')
 
 
-
   # Error handling
   class GeneratorError < StandardError
   end
 
   class GeneratorSourceMissingError < StandardError
   end
-
 
 
   # Generator
