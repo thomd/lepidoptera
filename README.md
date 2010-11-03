@@ -13,7 +13,7 @@ butterfly is a very simple and easy extensible __code generator for common every
 
 All code generators integrated into this project are structured in __generator groups__, whereas every group can have multiple __generator types__ of projects.
 
-For the time being, butterfly has code generators for projects like:
+For the time being, butterfly has code generators for the following projects (more to come):
 
    * [jquery][j] plugins, 
    * static pages hosted on [heroku][h], 
@@ -24,7 +24,7 @@ Installation
 
     $ sudo gem install butterfly
     
-As [lep][wiki-2] (/ˈlɛp/) is a synonym for [butterfly][wiki-1], you may set a shortcut alias in your `.bashrc` file:
+As [lep][wiki-2] (/ˈlɛp/) is a synonym for [butterfly][wiki-1], you may also set a shortcut alias in your `.bashrc` file:
 
     $ alias lep='butterfly $1'
     
@@ -76,14 +76,14 @@ You may include new code generators by putting the following code structure into
 
     .butterfly
     └─ name
-       ├─ USAGE
+       ├─ INFO
        ├─ name_generator.rb
        └─ template
           ├─ a file
           ├─ ...
           └─ a folder
 
-Much more easy is to use a generator generator which generates the above code generator stub into `~/.butterfly`:
+Much more easy is to use a generator generator which generates the above code generator stub into `~/.butterfly`: (TODO)
 
     $ butterfly -n <type-of-code-generator>
     $ butterfly -n <code-generator-group> <type-of-code-generator>
@@ -116,7 +116,7 @@ generate code for a static page on heroku:
 generate code for a sinatra application on heroku:
 
     $ butterfly heroku sinatra <app-name>
-    
+
 License
 =======
 
