@@ -106,13 +106,13 @@ RubiGen::Base.prepend_sources(generators.source_of(generator_group))
 
 
 # generate a new project <project_name> of type <generator_type>
-RubiGen::Scripts::Generate.new.run(ARGV, :generator => generator_type, :quiet => options[:quiet])
+RubiGen::Scripts::Generate.new.run(ARGV, :generator => generator_type, :quiet => options[:quiet], :gitinit => options[:gitinit])
 
 
 ### post processing
 
 # create an empty git repository and commit generated files
-if options[:git] then
+if options[:gitinit] then
   require 'git'
   logger = RubiGen::SimpleLogger.new(STDOUT)
   project_folder = File.join(Dir.pwd, project_name)

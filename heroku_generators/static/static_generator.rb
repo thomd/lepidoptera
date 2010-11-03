@@ -1,12 +1,14 @@
 class StaticGenerator < RubiGen::Base
   
-  attr_reader :name, :author
+  attr_reader :name, :author, :gitinit
   
   def initialize(runtime_args, runtime_options = {})
     super
+    usage
     @destination_root = File.expand_path(args.shift)
     @name = base_name
     @author = ENV['USER']
+    @gitinit = runtime_options[:gitinit]
   end
 
   def manifest

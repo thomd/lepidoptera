@@ -20,11 +20,11 @@ class OptionParser
     end
 
     self.on("-g", "--git","Create a git repository after code generation") do
-      opts[:git] = true
+      opts[:gitinit] = true
     end
 
-#    self.on("-s", "--svn [URL]","Initial import into the given svn repository") do |url|
-#      opts[:svn] = url
+#    self.on("-s", "--svn [URL]","Initial import into a given svn repository") do |url|
+#      opts[:svnimport] = url
 #    end
 
     self.on("-h", "--help", "Show help") do
@@ -47,8 +47,8 @@ module Butterfly
     # Default options. Overriden by command-line options.
     OPTIONS = {
       :quiet => false,
-      :git => false,
-      :svn => false,
+      :gitinit => false,
+      :svnimport => false,
       :new => false
     }
 

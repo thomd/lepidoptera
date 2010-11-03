@@ -100,7 +100,9 @@ module RubiGen
       status_color = {
         :exists => RED, 
         :identical => BLUE, 
-        :create => GREEN
+        :create => GREEN,
+        :force => GREEN,
+        :skip => RED
       }
 
       @out.print("#{status_color[status.to_sym]}%12s#{WHITE}  %s%s\n" % [status, '  ' * @level, message]) unless quiet

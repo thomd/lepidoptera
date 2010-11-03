@@ -8,10 +8,13 @@ Author: <%= author %>
 Deployment
 ----------
 
+<% if !gitinit then %>
     $ git init
+<%- end -%>
     $ ...
     $ heroku create <%= name %>
     § git push heroku master
+    $ heroku open
 
 Meta
 ----
