@@ -6,9 +6,10 @@
 #
 begin
   require 'jeweler'
+  require File.dirname(__FILE__) + '/lib/butterfly'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "butterfly"
-    gemspec.version = "0.1.0"
+    gemspec.version = Butterfly::VERSION
     gemspec.summary = "a life-enhancing code generator for everyday use"
     gemspec.description = "Butterfly is a very simple and easy extensible code generator for common every day projects."
     gemspec.email = "thomduerr@gmail.com"
