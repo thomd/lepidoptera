@@ -10,6 +10,11 @@ require File.dirname(__FILE__) + "/../lib/base"
 
 
 # defines some colors for a nice command-line output
+begin
+  require 'Win32/Console/ANSI' if RUBY_PLATFORM =~ /win32/
+rescue LoadError
+  raise 'You must gem install win32console to use color on Windows'
+end
 PURPLE = "\033[0;35m"
 BLUE   = "\033[0;34m"
 WHITE  = "\033[0;37m"
