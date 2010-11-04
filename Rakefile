@@ -15,6 +15,7 @@ begin
     gemspec.email = "thomduerr@gmail.com"
     gemspec.homepage = "http://github.com/thomd/butterfly/"
     gemspec.authors = ["Thomas Duerr"]
+    gemspec.executables = ["butterfly"]
     gemspec.add_dependency "rubigen", ">= 1.5.5"
     gemspec.add_dependency "git", ">= 1.2.5"
     gemspec.add_development_dependency "jeweler", ">= 1.4.0"
