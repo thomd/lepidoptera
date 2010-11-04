@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Thomas Duerr"]
-  s.date = %q{2010-11-03}
+  s.date = %q{2010-11-04}
   s.description = %q{Butterfly is a very simple and easy extensible code generator for common every day projects.}
   s.email = %q{thomduerr@gmail.com}
   s.executables = ["butterfly", "butterfly.html"]
@@ -25,18 +25,24 @@ Gem::Specification.new do |s|
      "bin/butterfly",
      "bin/butterfly.html",
      "butterfly.gemspec",
-     "heroku_generators/sinatra/USAGE",
+     "heroku_generators/sinatra/INFO",
      "heroku_generators/sinatra/sinatra_generator.rb",
+     "heroku_generators/sinatra/templates/.gems",
+     "heroku_generators/sinatra/templates/README.md",
+     "heroku_generators/sinatra/templates/app.rb",
+     "heroku_generators/sinatra/templates/config.ru",
+     "heroku_generators/static/INFO",
      "heroku_generators/static/static_generator.rb",
      "heroku_generators/static/templates/README.md",
      "heroku_generators/static/templates/config.ru",
      "heroku_generators/static/templates/public/css/main.css",
      "heroku_generators/static/templates/public/index.html",
      "heroku_generators/static/templates/public/js/app.js",
-     "jquery_generators/plugin/USAGE",
+     "jquery_generators/plugin/INFO",
      "jquery_generators/plugin/plugin_generator.rb",
      "jquery_generators/plugin/templates/demo.html",
      "jquery_generators/plugin/templates/js/jquery.plugin_name.js",
+     "lib/base.rb",
      "lib/butterfly.rb",
      "lib/options.rb"
   ]
