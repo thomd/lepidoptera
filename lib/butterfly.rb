@@ -104,7 +104,10 @@ module RubiGen
         :skip => RED
       }
 
-      @out.print("#{status_color[status.to_sym]}%12s#{WHITE}  %s%s\n" % [status, '  ' * @level, message]) unless quiet
+      template = "#{status_color[status.to_sym]}%12s#{WHITE}  %s%s\n"
+      template = "%12s  %s%s\n" if RUBY_PLATFORM =~ /win32/
+      
+      @out.print(template % [status, '  ' * @level, message]) unless quiet
       indent(&block) if block_given?
     end
   end
