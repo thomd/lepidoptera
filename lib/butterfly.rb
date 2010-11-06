@@ -7,7 +7,7 @@ require 'rubigen'
 module Butterfly
 
   # Current version
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   # path of build-in code generators
   GENERATORS_PATH = File.join(File.dirname(__FILE__), '..', '*_generators')
