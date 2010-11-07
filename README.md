@@ -28,7 +28,7 @@ Installation
 
 As [lep][wiki-2] (/ˈlɛp/) is a short for [lepidoptera][wiki-1], this gem will install an executable `lep`
 
-For estetic reasons, you may also set a synonym executable `butterfly` alias in your `.bashrc` file:
+For aesthetic reasons, you may also set a synonym executable `butterfly` alias in your `.bashrc` file:
 
     $ alias butterfly='lep $1'
     
