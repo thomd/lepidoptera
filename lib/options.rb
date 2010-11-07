@@ -11,7 +11,7 @@ class OptionParser
   def add_default(opts)
     self.separator ""
 
-#    self.on("-n", "--new", "Add a new code generator in ~/.butterfly") do
+#    self.on("-n", "--new", "Add a new code generator in ~/.lepidoptera") do
 #      opts[:new] = true
 #    end
 

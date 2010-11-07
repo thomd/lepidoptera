@@ -8,14 +8,14 @@ begin
   require 'jeweler'
   require File.dirname(__FILE__) + '/lib/butterfly'
   Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "butterfly"
+    gemspec.name = "lepidoptera"
     gemspec.version = Butterfly::VERSION
     gemspec.summary = "a life-enhancing code generator for everyday use"
-    gemspec.description = "Butterfly is a very simple and easy extensible code generator for common every day projects."
+    gemspec.description = "Lepidoptera is a very simple and easy extensible code generator for common every day projects."
     gemspec.email = "thomduerr@gmail.com"
-    gemspec.homepage = "http://github.com/thomd/butterfly/"
+    gemspec.homepage = "http://github.com/thomd/lepidoptera/"
     gemspec.authors = ["Thomas Duerr"]
-    gemspec.executables = ["butterfly"]
+    gemspec.executables = ["lep"]
     gemspec.add_dependency "rubigen", ">= 1.5.5"
     gemspec.add_dependency "git", ">= 1.2.5"
     gemspec.add_development_dependency "jeweler", ">= 1.4.0"

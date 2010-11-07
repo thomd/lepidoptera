@@ -4,26 +4,25 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{butterfly}
+  s.name = %q{lepidoptera}
   s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Thomas Duerr"]
-  s.date = %q{2010-11-06}
-  s.default_executable = %q{butterfly}
-  s.description = %q{Butterfly is a very simple and easy extensible code generator for common every day projects.}
+  s.date = %q{2010-11-07}
+  s.default_executable = %q{lep}
+  s.description = %q{Lepidoptera is a very simple and easy extensible code generator for common every day projects.}
   s.email = %q{thomduerr@gmail.com}
-  s.executables = ["butterfly"]
+  s.executables = ["lep"]
   s.extra_rdoc_files = [
     "README.md"
   ]
   s.files = [
     ".gitignore",
+     "HISTORY.md",
      "README.md",
      "Rakefile",
-     "bin/butterfly",
-     "bin/butterfly.html",
-     "butterfly.gemspec",
+     "bin/lep",
      "heroku_generators/sinatra/INFO",
      "heroku_generators/sinatra/sinatra_generator.rb",
      "heroku_generators/sinatra/templates/.gems",
@@ -41,11 +40,12 @@ Gem::Specification.new do |s|
      "jquery_generators/plugin/plugin_generator.rb",
      "jquery_generators/plugin/templates/demo.html",
      "jquery_generators/plugin/templates/js/jquery.plugin_name.js",
+     "lepidoptera.gemspec",
      "lib/base.rb",
      "lib/butterfly.rb",
      "lib/options.rb"
   ]
-  s.homepage = %q{http://github.com/thomd/butterfly/}
+  s.homepage = %q{http://github.com/thomd/lepidoptera/}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}

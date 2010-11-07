@@ -7,13 +7,13 @@ require 'rubigen'
 module Butterfly
 
   # Current version
-  VERSION = '0.1.1'
+  VERSION = '0.2.0'
 
   # path of build-in code generators
   GENERATORS_PATH = File.join(File.dirname(__FILE__), '..', '*_generators')
 
   # path of user code generators
-  USER_PATH = File.join(Dir.user_home, '.butterfly', '*_generators')
+  USER_PATH = File.join(Dir.user_home, '.lepidoptera', '*_generators')
 
 
   # Error handling
