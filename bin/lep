@@ -23,6 +23,7 @@ YELLOW = "\033[0;33m"
 RED    = "\033[0;31m"
 
 
+
 ### Set up generators
 
 # get code generators
@@ -36,6 +37,37 @@ parser = Butterfly::Options::Parser.new(generators)
 
 # parse and get options
 options = parser.parse(ARGV)
+
+
+
+### new-option? create a new code generator stub 
+if options[:new] then
+
+  # show common help if no argument is provided
+  parser.ask_for_new_generator if ARGV.empty?
+  
+  # show prticular help if only a generator group is provideds
+  parser.ask_for_new_generator_type(ARGV[0]) if ARGV.length == 1
+  
+  # create dotfolder for local code generators if not exist already
+  dot_folder = File.join(Dir.home, Butterfly::DOTFOLDER)
+  Dir.mkdir(dot_folder) if !Dir.exists?(dot_folder)
+  
+  
+  generator_group = ARGV[0]
+  generator_type = ARGV[1]
+  generator_type_folder = File.join(dot_folder, "#{generator_group}_generators", generator_type)
+
+  if !Dir.exists?(generator_type_folder)
+    stub_generator = RubiGen::PathSource.new(:app, File.dirname(__FILE__) + "/../lib/stub_generators")
+    RubiGen::Base.prepend_sources(stub_generator)
+    RubiGen::Scripts::Generate.new.run([generator_type_folder], :generator => 'stub')    
+  else
+    raise Butterfly::GeneratorFolderExists, "#{RED}generator '#{generator_group}_generators/#{generator_type}' does already exist!#{WHITE}" 
+  end
+  exit
+end
+
 
 
 # After parsing the options,
@@ -96,13 +128,6 @@ if !generators.types_of(generator_group).include?(generator_type)
 end  
 
 project_name = ARGV[0]
-
-
-# DEBUG 
-#puts "generator group: #{generator_group}"
-#puts "generator type:  #{generator_type}"
-#puts "project name:    #{project_name}"
-#puts "options:         #{options}"
 
 
 ### generate code!

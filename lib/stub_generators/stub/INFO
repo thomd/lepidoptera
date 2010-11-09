@@ -1,0 +1,17 @@
+----------
+
+(1) now, copy all your template files into: 
+    <%= target %>
+
+(2) edit your templates and insert some placeholders.
+    you have the following ERB placeholders available in your templates:
+
+    <%%= group %>:  name of the generator group (<%= group %>)  
+    <%%= name %>:   name of the generator       (<%= name %>)  
+    <%%= author %>: author of the project       (<%= author %>) 
+
+(3) write some INFO which will then be displayed after code generation.
+
+(4) test your new <%= name %> code generator:
+    $ lep <%= group %>
+    $ lep <%= group %> <%= name %> <project-name>

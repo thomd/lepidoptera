@@ -10,16 +10,18 @@ Lepidoptera /ˌlɛpɪˈdɒptərə/
 What is lepidoptera?
 --------------------
 
-Lepidoptera is a very simple and easy extensible __code generator for common every day projects__.  
+Lepidoptera is a simple and easy to extend __code generator for common every day projects__.  
 Technically, Lepidoptera is a wrapper for [rubigen][r] which allows setting up code templates for arbitrary projects.
 
-Code generators integrated into Lepidoptera are structured in __generator groups__, whereas every group can have multiple __generator types__.
+Lepidopteras code generators are structured in __generator groups__. A generators group is just a container for multiple generators, where as a generator is also called a __generator type__.
 
-For the time being, Lepidoptera has code generators for the following projects (more to come):
+For the time being, Lepidoptera has code generators for the following project types (more to come):
 
-   * [jquery][j] plugins, 
-   * static pages hosted on [heroku][h], 
-   * [sinatra][s] application hosted on [heroku][h].
+* [jquery][j] generators:
+  * jquery plugin 
+* [heroku][h] generators:
+  * static pages 
+  * a [sinatra][s] application
 
 Installation
 ------------
@@ -28,68 +30,75 @@ Installation
 
 As [lep][wiki-2] (/ˈlɛp/) is a short for [lepidoptera][wiki-1], this gem will install an executable `lep`
 
-For aesthetic reasons, you may also set a synonym executable `butterfly` alias in your `.bashrc` file:
+For aesthetic reason, you may also set a synonym alias `butterfly` in your `.bashrc` file:
 
-    $ alias butterfly='lep $1'
+    alias butterfly='lep $1'
     
 Usage
 -----
 
-for grouped code generators:
-
-    lep [options] <generator-group> <generator-type> <project-name>
-
-or for ungrouped code generators:
-
-    lep [options] <generator-type> <project-name>
+    $ lep [options] <generator-group> <generator-type> <project-name>
 
 with the following __options__:
 
     -q, --quiet              Suppress status output.
+    -n, --new                Create a new code generator stub in ~/.lepidoptera.
     -g, --git                Create a git repository after code generation.
-    -n, --new                Add a new code generator in ~/.lepidoptera
     -h, --help               Print generator's options and usage.
  
-and - for the time being - the following __code generators__ which are included in this gem:
+### Helpers
 
-    heroku static
-    heroku sinatra
-    jquery plugin
-  
-Helpers
--------
-
-Get a list of all code generators grouped by generator-groups:
+Get a list of all local code generator groups:
 
     $ lep
 
-Get a list of all code generator-types for a given generator-group:
+Get a list of all code generators for a given generator group:
 
     $ lep <generator-group>
 
-Extending Code Generators
--------------------------
+Extending with own Code Generators
+----------------------------------
 
 Since lepidoptera is based on _Nic Williams_ Ruby generator framework [rubigen][r], it is very simple to add new own private code generators.
 
-You may include new code generators by putting the following code structure into `~/.lepidoptera`:
+### 1. Manual creation of new a code generator
 
-    ~/.lepidoptera
-      └─ name
-         ├─ INFO
-         ├─ name_generator.rb
-         └─ template
-            ├─ a file
-            ├─ ...
-            └─ a folder
+Your own private code generators must reside in a folder `~/.lepidoptera`.
 
-Much more easy is to use a generator generator which generates the above code generator stub into `~/.lepidoptera`: (TODO)
+A new generator must satisfy the following code structure:
 
-    $ lep -n <type-of-code-generator>
-    $ lep -n <code-generator-group> <type-of-code-generator>
+    .lepidoptera
+    └─ <generator-group>_generators
+       └─ <generator-type>
+          ├─ INFO
+          ├─ <generator-type>_generator.rb
+          └─ templates
+             ├─ ...
+             └─ ...
 
-Integrated Code Generators
-==========================
+whereas every code generator type must contain the following files:
+
+* an optional `INFO` file containing some additional project info to be displayed after the generation.
+* a required generator file `<generator-type>_generator.rb` which contains the generation rules.
+* a required templates folder `templates` which may contain multiple ERB templates for the code to be generated.  
+  These ERB templates may contain variables as placeholders for the following information:
+  * `<%= name %>`: Name of the project.
+  * `<%= author %>`: Author of the project (OS Username).
+
+### 2. Automatic creation of new a code generator
+
+An easier way to create a new code generator is to automatically generate the above code generator stub into `~/.lepidoptera`.
+
+To create a new code generator stub, use the `--new` option and provide a __generator group__ and a __generator type__:
+
+    $ lep -n <generator-group> <generator-type>
+    
+If the generator group does not exist already, a group folder `<generator-group>_generators` will be created.
+
+Embedded Code Generators
+========================
+
+The following code generators are currently embedded within this project:
         
 jQuery Generators
 -----------------

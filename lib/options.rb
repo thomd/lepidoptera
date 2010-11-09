@@ -11,20 +11,24 @@ class OptionParser
   def add_default(opts)
     self.separator ""
 
-#    self.on("-n", "--new", "Add a new code generator in ~/.lepidoptera") do
-#      opts[:new] = true
-#    end
+    self.on("-n", "--new", "Create a new code generator stub in ~/.lepidoptera") do
+      opts[:new] = true
+    end
 
     self.on("-q", "--quiet", "Suppress status output") do
       opts[:quiet] = true
     end
 
-    self.on("-g", "--git","Create a git repository after code generation") do
+    self.on("-g", "--git", "Create a git repository after code generation") do
       opts[:gitinit] = true
     end
 
-#    self.on("-s", "--svn [URL]","Initial import into a given svn repository") do |url|
+#    self.on("-s", "--svn [URL]", "Initial import into a given svn repository") do |url|
 #      opts[:svnimport] = url
+#    end
+
+#    self.on("-l", "--list", "List all code generators") do 
+#      opts[:list] = true
 #    end
 
     self.on("-h", "--help", "Show help") do
@@ -102,6 +106,30 @@ module Butterfly
           opts.banner = "Usage: #{PURPLE}#{File.basename($0)}#{WHITE} [options] #{PURPLE}#{generator_group}#{WHITE} #{PURPLE}#{generator_type}#{WHITE} #{BLUE}<project-name>#{WHITE}"
           opts.add_default(options = {})
           opts.separator "#{BLUE}Please enter a project-name!#{WHITE}"
+        end
+        parser.parse(["-h"])
+        exit
+      end
+
+      def ask_for_new_generator
+        parser = OptionParser.new do |opts|
+          opts.banner = "Usage: #{PURPLE}#{File.basename($0)}#{WHITE} --new #{BLUE}<generator-group>#{WHITE} #{BLUE}<generator-type>#{WHITE}"
+          opts.separator ""
+          opts.define_head "Go, create a new code generator!"
+          opts.define_head ""
+          opts.separator "#{BLUE}Please enter a <generator-group> name and a <generator-type> name#{WHITE}"
+        end
+        parser.parse(["-h"])
+        exit
+      end
+
+      def ask_for_new_generator_type(generator_group)
+        parser = OptionParser.new do |opts|
+          opts.banner = "Usage: #{PURPLE}#{File.basename($0)}#{WHITE} --new #{generator_group} #{BLUE}<generator-type>#{WHITE}"
+          opts.separator ""
+          opts.define_head "Go, create a new code generator in the #{generator_group} group!"
+          opts.define_head ""
+          opts.separator "#{BLUE}Please enter a <generator-type> name#{WHITE}"
         end
         parser.parse(["-h"])
         exit

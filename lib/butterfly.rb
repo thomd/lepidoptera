@@ -7,20 +7,26 @@ require 'rubigen'
 module Butterfly
 
   # Current version
-  VERSION = '0.2.0'
+  VERSION = '0.3.0'
+
+  # local lepidoptera folder
+  DOTFOLDER = '.lepidoptera'
 
   # path of build-in code generators
-  GENERATORS_PATH = File.join(File.dirname(__FILE__), '..', '*_generators')
+  GENERATOR_GROUPS = File.join(File.dirname(__FILE__), '..', '*_generators')
 
-  # path of user code generators
-  USER_PATH = File.join(Dir.user_home, '.lepidoptera', '*_generators')
+  # path of user code generator groups
+  USER_GROUPS = File.join(Dir.home, DOTFOLDER, '*_generators')
 
 
   # Error handling
   class GeneratorError < StandardError
   end
 
-  class GeneratorSourceMissingError < StandardError
+  class GeneratorSourceMissingError < GeneratorError
+  end
+
+  class GeneratorFolderExists < GeneratorError
   end
 
 
@@ -32,8 +38,8 @@ module Butterfly
     def initialize
       @generators = []
 
-      # loop through build in code generators and user code generators
-      [GENERATORS_PATH, USER_PATH].each do |path|
+      # loop through build in code generator groups and user code generator groups
+      [GENERATOR_GROUPS, USER_GROUPS].each do |path|
         Dir[path].each do |file|
           @generators.push(GeneratorGroup.new(file)) if File.directory?(file)
         end
@@ -74,13 +80,12 @@ module Butterfly
     # a generator-group contains a generator name, its path and its generator-types
     class GeneratorGroup
       
-      attr_accessor :name, :source, :types, :label
+      attr_accessor :name, :source, :types
       
       def initialize(file)
         @name = File.basename(file).gsub(/_generators$/, '')
         @source = RubiGen::PathSource.new(:app, file)
         @types = @source.names(:visible)
-        @label = @source.label
       end
     end
     

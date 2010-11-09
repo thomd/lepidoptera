@@ -4,7 +4,7 @@ module Butterfly
   # extend Base class wwith base functionality for all butterfly generators
   class Base < RubiGen::Base
 
-    attr_reader :name, :author, :gitinit
+    attr_reader :target, :name, :author, :gitinit, :group
 
     def initialize(runtime_args, runtime_options = {})
       super
@@ -12,6 +12,8 @@ module Butterfly
       @name = base_name
       @author = ENV['USER']
       @gitinit = runtime_options[:gitinit]
+      @target = @destination_root
+      @group = @destination_root.match(/\/(\w+)_generators\//)[1]
     end
 
     # do some final things after generation
