@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lepidoptera}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Thomas Duerr"]
-  s.date = %q{2010-11-07}
+  s.date = %q{2010-11-10}
   s.default_executable = %q{lep}
   s.description = %q{Lepidoptera is a very simple and easy extensible code generator for common every day projects.}
   s.email = %q{thomduerr@gmail.com}
@@ -43,7 +43,12 @@ Gem::Specification.new do |s|
      "lepidoptera.gemspec",
      "lib/base.rb",
      "lib/butterfly.rb",
-     "lib/options.rb"
+     "lib/options.rb",
+     "lib/stub_generators/stub/INFO",
+     "lib/stub_generators/stub/stub_generator.rb",
+     "lib/stub_generators/stub/templates/generator-type_INFO",
+     "lib/stub_generators/stub/templates/generator-type_README.txt",
+     "lib/stub_generators/stub/templates/generator-type_generator.rb"
   ]
   s.homepage = %q{http://github.com/thomd/lepidoptera/}
   s.rdoc_options = ["--charset=UTF-8"]
