@@ -1,1 +1,4 @@
+----------
+<%= name %> code generator by <%= author %> (c) <%= date %>
+
 some INFO text

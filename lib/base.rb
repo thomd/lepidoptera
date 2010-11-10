@@ -4,7 +4,7 @@ module Butterfly
   # extend Base class wwith base functionality for all butterfly generators
   class Base < RubiGen::Base
 
-    attr_reader :target, :name, :author, :gitinit, :group
+    attr_reader :name, :author, :gitinit
 
     def initialize(runtime_args, runtime_options = {})
       super
@@ -12,8 +12,6 @@ module Butterfly
       @name = base_name
       @author = ENV['USER']
       @gitinit = runtime_options[:gitinit]
-      @target = @destination_root
-      @group = @destination_root.match(/\/(\w+)_generators\//)[1]
     end
 
     # do some final things after generation
@@ -47,4 +45,33 @@ module Butterfly
   
   end
 
+end
+
+
+module Butterfly
+  module Stub
+    
+    # extend Base class wwith base functionality for the code stub generator generator
+    class Base < RubiGen::Base
+
+      attr_reader :target, :name, :author, :group, :date
+
+      def initialize(runtime_args, runtime_options = {})
+        super
+        @destination_root = File.expand_path(args.shift)
+        @name = base_name
+        @author = ENV['USER']
+        @target = @destination_root
+        @group = @destination_root.match(/\/(\w+)_generators\//)[1]
+        @date = Time.now.strftime("%Y-%m-%d")
+      end
+
+      # do some final things after generation
+      def after_generate
+        info = File.read(File.join(spec.path, 'INFO')) rescue ''
+        template = ERB.new(info, nil, '<>')
+        puts "\n#{template.result(binding)}"
+      end  
+    end
+  end
 end

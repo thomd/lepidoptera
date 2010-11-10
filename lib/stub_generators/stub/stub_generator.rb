@@ -1,4 +1,4 @@
-class StubGenerator < Butterfly::Base
+class StubGenerator < Butterfly::Stub::Base
   
   def manifest
     record do |m|
