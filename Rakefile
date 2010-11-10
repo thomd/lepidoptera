@@ -11,7 +11,7 @@ begin
     gemspec.name = "lepidoptera"
     gemspec.version = Butterfly::VERSION
     gemspec.summary = "a life-enhancing code generator for everyday use"
-    gemspec.description = "Lepidoptera is a very simple and easy extensible code generator for common every day projects."
+    gemspec.description = "Lepidoptera is a simple and easy to extend code generator for common every day projects."
     gemspec.email = "thomduerr@gmail.com"
     gemspec.homepage = "http://github.com/thomd/lepidoptera/"
     gemspec.authors = ["Thomas Duerr"]
