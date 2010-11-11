@@ -1,3 +1,10 @@
+## Version 0.3.0, released 08.11.2010
+
+Lepidoptera allows now to generate a stub for a new code generator in a dot-folder.
+
+* [ADD] create a generator stub with the --new option.
+
+
 ## Version 0.2.0, released 07.11.2010
 
 Due to a naming conflict with [an other project][1], I changed the name of the project and of the gem from __butterfly__ to __lepidoptera__, which is etymological the same.
