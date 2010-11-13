@@ -1,10 +1,12 @@
-------------
-deploy sinatra project on heroku with:
+   ======================================
+   deploy sinatra project on heroku:
 
 <% if !gitinit then %>
-    git init
-    ...
+       git init
+       [do your work...]
 <% end %>
-    heroku create <%= name %>
-    git push heroku master
-    heroku open
+       heroku create <%= name %>
+       git push heroku master
+       heroku open
+   ======================================
+
