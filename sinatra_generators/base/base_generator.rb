@@ -5,7 +5,6 @@ class BaseGenerator < Butterfly::Base
 
       # Create a directory including any missing parent directories.
       # Always skips directories which exist.
-      m.directory "config"
       m.directory "public/css"
       m.directory "public/images"
       m.directory "public/js"
