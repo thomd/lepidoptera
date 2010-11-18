@@ -4,7 +4,7 @@ module Butterfly
   # extend Base class wwith base functionality for all butterfly generators
   class Base < RubiGen::Base
 
-    attr_reader :name, :author, :gitinit
+    attr_reader :name, :author, :gitinit, :date
 
     def initialize(runtime_args, runtime_options = {})
       super
@@ -12,6 +12,7 @@ module Butterfly
       @name = base_name
       @author = ENV['USER']
       @gitinit = runtime_options[:gitinit]
+      @date = Time.now.strftime("%Y-%m-%d")
     end
 
     # do some final things after generation
