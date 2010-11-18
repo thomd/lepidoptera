@@ -1,0 +1,35 @@
+$viewport_width: 960px
+$pad: 10px
+$default_rounding: 6px
+
+=rounding($rounding: $default_rounding)
+  -moz-border-radius: $rounding
+  -webkit-border-radius: $rounding
+  border-radius: $rounding
+
+
+section
+  width: $viewport_width
+  margin: 10px auto
+  header
+    background: #EEE
+    float: left
+    width: $viewport_width - 2*$pad  
+    padding: $pad
+    +rounding
+    nav
+      float: right
+      margin-top: 6px
+      a
+        font-size: 16px
+        color: #0088FF
+    h1
+      float: left
+      margin: 0
+  p
+    clear: both
+    padding: $pad
+  footer
+    background: #EEE
+    padding: $pad
+    +rounding

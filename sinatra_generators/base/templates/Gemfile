@@ -1,0 +1,10 @@
+source "http://rubygems.org"
+
+# All Environment
+gem "haml", "3.0.23"
+gem "sinatra", "1.1.0"
+
+# Development Environment
+group :development do
+#  gem 'thin', "1.2.7"
+end

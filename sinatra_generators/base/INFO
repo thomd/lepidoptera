@@ -1,0 +1,20 @@
+  =====================================================
+  install gems:
+    $ bundle install
+    
+  start sinatra application on localhost:
+    $ rackup config.rb
+
+  deploy sinatra project on heroku:
+<% if !gitinit then %>
+    $ git init
+      [do your work...]
+<% end %>
+    $ heroku create <%= name %>
+    $ git push heroku master
+    $ heroku open
+  ======================================================
+  Documentation can be found at http://www.sinatrarb.com 
+
+
+  
