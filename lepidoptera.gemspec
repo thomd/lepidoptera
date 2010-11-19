@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lepidoptera}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Thomas Duerr"]
-  s.date = %q{2010-11-10}
+  s.date = %q{2010-11-19}
   s.default_executable = %q{lep}
-  s.description = %q{Lepidoptera is a very simple and easy extensible code generator for common every day projects.}
+  s.description = %q{Lepidoptera is a simple and easy to extend code generator for common every day projects.}
   s.email = %q{thomduerr@gmail.com}
   s.executables = ["lep"]
   s.extra_rdoc_files = [
@@ -48,7 +48,29 @@ Gem::Specification.new do |s|
      "lib/stub_generators/stub/stub_generator.rb",
      "lib/stub_generators/stub/templates/generator-type_INFO",
      "lib/stub_generators/stub/templates/generator-type_README.txt",
-     "lib/stub_generators/stub/templates/generator-type_generator.rb"
+     "lib/stub_generators/stub/templates/generator-type_generator.rb",
+     "sinatra_generators/base/INFO",
+     "sinatra_generators/base/base_generator.rb",
+     "sinatra_generators/base/templates/Gemfile",
+     "sinatra_generators/base/templates/app.rb",
+     "sinatra_generators/base/templates/config.ru",
+     "sinatra_generators/base/templates/public/css/main.css",
+     "sinatra_generators/base/templates/public/js/app.js",
+     "sinatra_generators/base/templates/views/index.haml",
+     "sinatra_generators/base/templates/views/layouts/default.haml",
+     "sinatra_generators/base/templates/views/style.sass",
+     "sinatra_generators/datamapper/INFO",
+     "sinatra_generators/datamapper/datamapper_generator.rb",
+     "sinatra_generators/datamapper/templates/Gemfile",
+     "sinatra_generators/datamapper/templates/app.rb",
+     "sinatra_generators/datamapper/templates/config.ru",
+     "sinatra_generators/datamapper/templates/config/database.rb",
+     "sinatra_generators/datamapper/templates/models.rb",
+     "sinatra_generators/datamapper/templates/public/css/main.css",
+     "sinatra_generators/datamapper/templates/public/js/app.js",
+     "sinatra_generators/datamapper/templates/views/index.haml",
+     "sinatra_generators/datamapper/templates/views/layouts/default.haml",
+     "sinatra_generators/datamapper/templates/views/style.sass"
   ]
   s.homepage = %q{http://github.com/thomd/lepidoptera/}
   s.rdoc_options = ["--charset=UTF-8"]

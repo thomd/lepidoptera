@@ -7,7 +7,7 @@ require 'rubigen'
 module Butterfly
 
   # Current version
-  VERSION = '0.3.0'
+  VERSION = '0.3.1'
 
   # local lepidoptera folder
   DOTFOLDER = '.lepidoptera'
