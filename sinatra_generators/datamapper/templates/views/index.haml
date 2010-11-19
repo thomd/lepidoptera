@@ -1,0 +1,9 @@
+.content
+  %ul
+    - @items.each do |item|
+      %li
+        = item['item']
+        %a{:href => '/delete/' + item['id'].to_s} delete
+  %form{:action => '/create', :method => 'post'}
+    %input{:name => 'item'}
+    %input{:type => 'submit', :value => 'add'}

@@ -1,0 +1,21 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "UTF-8"}/
+
+    %title <%= name %>
+
+    %link{:rel => 'stylesheet', :href => "/css/main.css"}
+    %link{:rel => 'stylesheet', :href => "/style.css"}
+
+    %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"}
+    %script{:src => "/js/app.js"}
+
+  %body
+    %section
+      %header
+        %h1 <%= name.camelize %>
+        %nav
+          %a{:href => '/'} home
+      = yield
+      %footer <%= date %>
