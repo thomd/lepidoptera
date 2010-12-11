@@ -2,21 +2,21 @@ body {
   font: normal normal normal 12px/1.5 Helvetica,sans-serif;
 }
 
-.<%= name %> {
+.<%= name.dasherize %> {
 	background: #EEE;
 	margin: 20px auto;
 	width: 500px;
 	padding: 1px 10px;
 }
 
-.<%= name %> h1,
-.<%= name %> h1 input {
+.<%= name.dasherize %> h1,
+.<%= name.dasherize %> h1 input {
   font-weight: bold;
   font-size: 16px;
 }
 
-.<%= name %> h1 input,
-.<%= name %> p textarea {
+.<%= name.dasherize %> h1 input,
+.<%= name.dasherize %> p textarea {
   border: none;
   width: 490px;
   padding: 5px;
