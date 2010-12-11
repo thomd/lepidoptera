@@ -1,0 +1,19 @@
+!!! 5
+%html
+  %head
+    %meta{:charset => "UTF-8"}/
+    %title <%= name %>
+    %link{:rel => "stylesheet", :href => "css/main.css"}
+  %body
+    - @<%= name %>s.each do |<%= name %>|
+      .<%= name %>
+        %h1
+          = <%= name %>.title
+        %p
+          = <%= name %>.body
+    %form{:action => "/", :method => "post", :class => "post"}
+      %h1
+        %input{:name => "title"}
+      %p
+        %textarea{:rows => 5, :name => "body"}
+      %input{:type => "submit", :value => "add <%= name %>"}

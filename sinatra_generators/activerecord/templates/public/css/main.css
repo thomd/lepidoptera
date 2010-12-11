@@ -1,0 +1,24 @@
+body {
+  font: normal normal normal 12px/1.5 Helvetica,sans-serif;
+}
+
+.<%= name %> {
+	background: #EEE;
+	margin: 20px auto;
+	width: 500px;
+	padding: 1px 10px;
+}
+
+.<%= name %> h1,
+.<%= name %> h1 input {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.<%= name %> h1 input,
+.<%= name %> p textarea {
+  border: none;
+  width: 490px;
+  padding: 5px;
+}
+

@@ -1,0 +1,6 @@
+source "http://rubygems.org"
+
+gem "haml", "3.0.23"
+gem "sinatra", "1.1.0"
+gem "do_sqlite3", "0.10.2"
+gem "activerecord", "3.0.0"
