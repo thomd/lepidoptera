@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lepidoptera}
-  s.version = "0.3.1"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Thomas Duerr"]
-  s.date = %q{2010-11-19}
+  s.date = %q{2010-12-11}
   s.default_executable = %q{lep}
   s.description = %q{Lepidoptera is a simple and easy to extend code generator for common every day projects.}
   s.email = %q{thomduerr@gmail.com}
@@ -49,6 +49,14 @@ Gem::Specification.new do |s|
      "lib/stub_generators/stub/templates/generator-type_INFO",
      "lib/stub_generators/stub/templates/generator-type_README.txt",
      "lib/stub_generators/stub/templates/generator-type_generator.rb",
+     "sinatra_generators/activerecord/INFO",
+     "sinatra_generators/activerecord/activerecord_generator.rb",
+     "sinatra_generators/activerecord/templates/Gemfile",
+     "sinatra_generators/activerecord/templates/app.rb",
+     "sinatra_generators/activerecord/templates/config.ru",
+     "sinatra_generators/activerecord/templates/public/css/main.css",
+     "sinatra_generators/activerecord/templates/views/.index.erb.swp",
+     "sinatra_generators/activerecord/templates/views/index.haml",
      "sinatra_generators/base/INFO",
      "sinatra_generators/base/base_generator.rb",
      "sinatra_generators/base/templates/Gemfile",
