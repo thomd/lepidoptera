@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lepidoptera}
-  s.version = "0.4.0"
+  s.version = "0.5.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Thomas Duerr"]
-  s.date = %q{2010-12-11}
+  s.date = %q{2011-01-04}
   s.default_executable = %q{lep}
   s.description = %q{Lepidoptera is a simple and easy to extend code generator for common every day projects.}
   s.email = %q{thomduerr@gmail.com}
@@ -40,6 +40,10 @@ Gem::Specification.new do |s|
      "jquery_generators/plugin/plugin_generator.rb",
      "jquery_generators/plugin/templates/demo.html",
      "jquery_generators/plugin/templates/js/jquery.plugin_name.js",
+     "jquery_generators/try/INFO",
+     "jquery_generators/try/templates/demo.html",
+     "jquery_generators/try/templates/js/try.js",
+     "jquery_generators/try/try_generator.rb",
      "lepidoptera.gemspec",
      "lib/base.rb",
      "lib/butterfly.rb",

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+  <title>jquery <%= name %>.js tryout</title> 
+
+  <link rel="stylesheet" href="http://reset5.googlecode.com/hg/reset.css" />
+</head>
+<body>
+
+  <h1>jquery <%= name %> tryout</h1>
+  
+  <div id="try">
+    
+  </div>
+  
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+  <script type="text/javascript" src="js/<%= name %>.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      
+      $('#try')
+      
+    });
+  </script>
+</body>
