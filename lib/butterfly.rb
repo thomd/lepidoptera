@@ -7,7 +7,7 @@ require 'rubigen'
 module Butterfly
 
   # Current version
-  VERSION = '0.5.1'
+  VERSION = '0.5.2'
 
   # local lepidoptera folder
   DOTFOLDER = '.lepidoptera'
@@ -16,7 +16,7 @@ module Butterfly
   GENERATOR_GROUPS = File.join(File.dirname(__FILE__), '..', '*_generators')
 
   # path of user code generator groups
-  USER_GROUPS = File.join(Dir.home, DOTFOLDER, '*_generators')
+  USER_GROUPS = File.join(File.expand_path('~'), DOTFOLDER, '*_generators')
 
 
   # Error handling
